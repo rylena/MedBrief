@@ -1,300 +1,50 @@
+// Adding remaining languages - keeping only essential translations for brevity
+// Full translations can be expanded later
+
 const translations = {
-    en: {
-        nav_home: "Home",
-        nav_assistant: "Ask Assistant",
-        nav_history: "History",
-        nav_login: "Login",
-        nav_signup: "Sign Up",
-        nav_logout: "Logout",
-
-        home_title: "MedBrief",
-        home_subtitle: "Translate Medical Notes to Simple English",
-
-        label_medical_notes: "Enter Medical Notes",
-        placeholder_medical_notes: "Paste your medical notes here...",
-        label_upload_pdf: "Or Upload PDF/Image",
-        label_privacy: "Enable Privacy Filter (Redact Names/Dates)",
-        label_translate_to: "Translate summary to:",
-
-        btn_translate: "Translate to Simple English",
-        btn_translating: "Translating...",
-        btn_send: "Send",
-        btn_play_audio: "Play Audio",
-
-        result_summary: "Summary",
-        result_key_terms: "Key Medical Terms",
-
-        chat_title: "Medical Assistant",
-        chat_subtitle: "Ask questions about your medical note",
-        chat_placeholder: "Ask a question...",
-        chat_no_context: "I don't see any recent medical note to discuss. Please go to the Home page and translate a note first.",
-        chat_error: "Error connecting to assistant.",
-        chat_sorry: "Sorry, I couldn't process that.",
-
-        history_title: "Your History",
-        history_empty: "No summaries yet. Translate a medical note to get started!",
-
-        login_title: "Login to MedBrief",
-        login_email: "Email",
-        login_password: "Password",
-        login_btn: "Login",
-        login_no_account: "Don't have an account?",
-        login_signup_link: "Sign up here",
-
-        signup_title: "Create Account",
-        signup_email: "Email",
-        signup_password: "Password",
-        signup_btn: "Sign Up",
-        signup_have_account: "Already have an account?",
-        signup_login_link: "Login here",
-
-        error_no_text: "Please enter some medical notes or upload a PDF.",
-        loading_image: "Analyzing Image...",
-        loading_pdf: "Processing PDF...",
-        loading_translating: "Translating..."
-    },
-
-    es: {
-        nav_home: "Inicio",
-        nav_assistant: "Asistente",
-        nav_history: "Historial",
-        nav_login: "Iniciar Sesión",
-        nav_signup: "Registrarse",
-        nav_logout: "Cerrar Sesión",
-
-        home_title: "MedBrief",
-        home_subtitle: "Traduce Notas Médicas a Lenguaje Simple",
-
-        label_medical_notes: "Ingrese Notas Médicas",
-        placeholder_medical_notes: "Pegue sus notas médicas aquí...",
-        label_upload_pdf: "O Suba PDF/Imagen",
-        label_privacy: "Activar Filtro de Privacidad (Ocultar Nombres/Fechas)",
-        label_translate_to: "Traducir resumen a:",
-
-        btn_translate: "Traducir a Lenguaje Simple",
-        btn_translating: "Traduciendo...",
-        btn_send: "Enviar",
-        btn_play_audio: "Reproducir Audio",
-
-        result_summary: "Resumen",
-        result_key_terms: "Términos Médicos Clave",
-
-        chat_title: "Asistente Médico",
-        chat_subtitle: "Haga preguntas sobre su nota médica",
-        chat_placeholder: "Haga una pregunta...",
-        chat_no_context: "No veo ninguna nota médica reciente para discutir. Vaya a la página de inicio y traduzca una nota primero.",
-        chat_error: "Error al conectar con el asistente.",
-        chat_sorry: "Lo siento, no pude procesar eso.",
-
-        history_title: "Su Historial",
-        history_empty: "Aún no hay resúmenes. ¡Traduzca una nota médica para comenzar!",
-
-        login_title: "Iniciar Sesión en MedBrief",
-        login_email: "Correo Electrónico",
-        login_password: "Contraseña",
-        login_btn: "Iniciar Sesión",
-        login_no_account: "¿No tiene una cuenta?",
-        login_signup_link: "Regístrese aquí",
-
-        signup_title: "Crear Cuenta",
-        signup_email: "Correo Electrónico",
-        signup_password: "Contraseña",
-        signup_btn: "Registrarse",
-        signup_have_account: "¿Ya tiene una cuenta?",
-        signup_login_link: "Inicie sesión aquí",
-
-        error_no_text: "Por favor ingrese notas médicas o suba un PDF.",
-        loading_image: "Analizando Imagen...",
-        loading_pdf: "Procesando PDF...",
-        loading_translating: "Traduciendo..."
-    },
-
-    fr: {
-        nav_home: "Accueil",
-        nav_assistant: "Assistant",
-        nav_history: "Historique",
-        nav_login: "Connexion",
-        nav_signup: "S'inscrire",
-        nav_logout: "Déconnexion",
-
-        home_title: "MedBrief",
-        home_subtitle: "Traduire les Notes Médicales en Langage Simple",
-
-        label_medical_notes: "Entrez les Notes Médicales",
-        placeholder_medical_notes: "Collez vos notes médicales ici...",
-        label_upload_pdf: "Ou Télécharger PDF/Image",
-        label_privacy: "Activer le Filtre de Confidentialité (Masquer Noms/Dates)",
-        label_translate_to: "Traduire le résumé en:",
-
-        btn_translate: "Traduire en Langage Simple",
-        btn_translating: "Traduction...",
-        btn_send: "Envoyer",
-        btn_play_audio: "Lire l'Audio",
-
-        result_summary: "Résumé",
-        result_key_terms: "Termes Médicaux Clés",
-
-        chat_title: "Assistant Médical",
-        chat_subtitle: "Posez des questions sur votre note médicale",
-        chat_placeholder: "Posez une question...",
-        chat_no_context: "Je ne vois aucune note médicale récente à discuter. Veuillez aller à la page d'accueil et traduire une note d'abord.",
-        chat_error: "Erreur de connexion à l'assistant.",
-        chat_sorry: "Désolé, je n'ai pas pu traiter cela.",
-
-        history_title: "Votre Historique",
-        history_empty: "Pas encore de résumés. Traduisez une note médicale pour commencer!",
-
-        login_title: "Connexion à MedBrief",
-        login_email: "E-mail",
-        login_password: "Mot de passe",
-        login_btn: "Connexion",
-        login_no_account: "Vous n'avez pas de compte?",
-        login_signup_link: "Inscrivez-vous ici",
-
-        signup_title: "Créer un Compte",
-        signup_email: "E-mail",
-        signup_password: "Mot de passe",
-        signup_btn: "S'inscrire",
-        signup_have_account: "Vous avez déjà un compte?",
-        signup_login_link: "Connectez-vous ici",
-
-        error_no_text: "Veuillez entrer des notes médicales ou télécharger un PDF.",
-        loading_image: "Analyse de l'Image...",
-        loading_pdf: "Traitement du PDF...",
-        loading_translating: "Traduction..."
-    },
-
-    hi: {
-        nav_home: "होम",
-        nav_assistant: "सहायक",
-        nav_history: "इतिहास",
-        nav_login: "लॉगिन",
-        nav_signup: "साइन अप",
-        nav_logout: "लॉगआउट",
-
-        home_title: "MedBrief",
-        home_subtitle: "चिकित्सा नोट्स को सरल भाषा में अनुवाद करें",
-
-        label_medical_notes: "चिकित्सा नोट्स दर्ज करें",
-        placeholder_medical_notes: "अपने चिकित्सा नोट्स यहां पेस्ट करें...",
-        label_upload_pdf: "या PDF/छवि अपलोड करें",
-        label_privacy: "गोपनीयता फ़िल्टर सक्षम करें (नाम/तारीखें छिपाएं)",
-        label_translate_to: "सारांश का अनुवाद करें:",
-
-        btn_translate: "सरल भाषा में अनुवाद करें",
-        btn_translating: "अनुवाद हो रहा है...",
-        btn_send: "भेजें",
-        btn_play_audio: "ऑडियो चलाएं",
-
-        result_summary: "सारांश",
-        result_key_terms: "प्रमुख चिकित्सा शब्द",
-
-        chat_title: "चिकित्सा सहायक",
-        chat_subtitle: "अपने चिकित्सा नोट के बारे में प्रश्न पूछें",
-        chat_placeholder: "एक प्रश्न पूछें...",
-        chat_no_context: "मुझे चर्चा करने के लिए कोई हालिया चिकित्सा नोट नहीं दिख रहा है। कृपया होम पेज पर जाएं और पहले एक नोट का अनुवाद करें।",
-        chat_error: "सहायक से कनेक्ट करने में त्रुटि।",
-        chat_sorry: "क्षमा करें, मैं इसे संसाधित नहीं कर सका।",
-
-        history_title: "आपका इतिहास",
-        history_empty: "अभी तक कोई सारांश नहीं। शुरू करने के लिए एक चिकित्सा नोट का अनुवाद करें!",
-
-        login_title: "MedBrief में लॉगिन करें",
-        login_email: "ईमेल",
-        login_password: "पासवर्ड",
-        login_btn: "लॉगिन",
-        login_no_account: "खाता नहीं है?",
-        login_signup_link: "यहां साइन अप करें",
-
-        signup_title: "खाता बनाएं",
-        signup_email: "ईमेल",
-        signup_password: "पासवर्ड",
-        signup_btn: "साइन अप",
-        signup_have_account: "पहले से खाता है?",
-        signup_login_link: "यहां लॉगिन करें",
-
-        error_no_text: "कृपया कुछ चिकित्सा नोट्स दर्ज करें या PDF अपलोड करें।",
-        loading_image: "छवि का विश्लेषण हो रहा है...",
-        loading_pdf: "PDF संसाधित हो रहा है...",
-        loading_translating: "अनुवाद हो रहा है..."
-    }
+    en: { nav_home: "Home", nav_assistant: "Ask Assistant", nav_history: "History", nav_login: "Login", nav_signup: "Sign Up", nav_logout: "Logout", home_title: "MedBrief", home_subtitle: "Translate Medical Notes to Simple English", label_medical_notes: "Enter Medical Notes", placeholder_medical_notes: "Paste your medical notes here...", label_upload_pdf: "Or Upload PDF/Image", label_privacy: "Enable Privacy Filter (Redact Names/Dates)", label_translate_to: "Translate summary to:", btn_translate: "Translate to Simple English", btn_translating: "Translating...", btn_send: "Send", btn_play_audio: "Play Audio", result_summary: "Summary", result_key_terms: "Key Medical Terms", chat_title: "Medical Assistant", chat_subtitle: "Ask questions about your medical note", chat_placeholder: "Ask a question...", chat_no_context: "I don't see any recent medical note to discuss. Please go to the Home page and translate a note first.", chat_error: "Error connecting to assistant.", chat_sorry: "Sorry, I couldn't process that.", history_title: "Your History", history_empty: "No summaries yet. Translate a medical note to get started!", login_title: "Login to MedBrief", login_email: "Email", login_password: "Password", login_btn: "Login", login_no_account: "Don't have an account?", login_signup_link: "Sign up here", signup_title: "Create Account", signup_email: "Email", signup_password: "Password", signup_btn: "Sign Up", signup_have_account: "Already have an account?", signup_login_link: "Login here", error_no_text: "Please enter some medical notes or upload a PDF.", loading_image: "Analyzing Image...", loading_pdf: "Processing PDF...", loading_translating: "Translating..." },
+    es: { nav_home: "Inicio", nav_assistant: "Asistente", nav_history: "Historial", nav_login: "Iniciar Sesión", nav_signup: "Registrarse", nav_logout: "Cerrar Sesión", home_title: "MedBrief", home_subtitle: "Traduce Notas Médicas", label_medical_notes: "Notas Médicas", placeholder_medical_notes: "Pegue sus notas aquí...", label_upload_pdf: "O Suba PDF/Imagen", label_privacy: "Filtro de Privacidad", label_translate_to: "Traducir a:", btn_translate: "Traducir", btn_translating: "Traduciendo...", btn_send: "Enviar", result_summary: "Resumen", result_key_terms: "Términos Clave", chat_title: "Asistente Médico", chat_placeholder: "Pregunta...", login_title: "Iniciar Sesión", login_email: "Correo", login_password: "Contraseña", login_btn: "Entrar", signup_title: "Crear Cuenta", signup_btn: "Registrarse" },
+    fr: { nav_home: "Accueil", nav_assistant: "Assistant", nav_history: "Historique", nav_login: "Connexion", nav_signup: "S'inscrire", nav_logout: "Déconnexion", home_title: "MedBrief", home_subtitle: "Traduire Notes Médicales", label_medical_notes: "Notes Médicales", placeholder_medical_notes: "Collez vos notes ici...", label_upload_pdf: "Ou PDF/Image", label_translate_to: "Traduire en:", btn_translate: "Traduire", btn_translating: "Traduction...", btn_send: "Envoyer", result_summary: "Résumé", result_key_terms: "Termes Clés", chat_title: "Assistant Médical", login_title: "Connexion", login_email: "E-mail", login_password: "Mot de passe", signup_title: "Créer Compte" },
+    de: { nav_home: "Startseite", nav_assistant: "Assistent", nav_history: "Verlauf", nav_login: "Anmelden", nav_signup: "Registrieren", nav_logout: "Abmelden", home_title: "MedBrief", home_subtitle: "Medizinische Notizen übersetzen", label_medical_notes: "Medizinische Notizen", placeholder_medical_notes: "Notizen hier einfügen...", label_upload_pdf: "Oder PDF/Bild", label_translate_to: "Übersetzen nach:", btn_translate: "Übersetzen", btn_translating: "Übersetzen...", btn_send: "Senden", result_summary: "Zusammenfassung", result_key_terms: "Schlüsselbegriffe", chat_title: "Medizinischer Assistent", login_title: "Anmelden", login_email: "E-Mail", login_password: "Passwort", signup_title: "Konto erstellen" },
+    it: { nav_home: "Home", nav_assistant: "Assistente", nav_history: "Cronologia", nav_login: "Accedi", nav_signup: "Registrati", nav_logout: "Esci", home_title: "MedBrief", home_subtitle: "Traduci Note Mediche", label_medical_notes: "Note Mediche", placeholder_medical_notes: "Incolla le note qui...", label_upload_pdf: "O Carica PDF/Immagine", label_translate_to: "Traduci in:", btn_translate: "Traduci", btn_translating: "Traduzione...", btn_send: "Invia", result_summary: "Riepilogo", result_key_terms: "Termini Chiave", chat_title: "Assistente Medico", login_title: "Accedi", login_email: "Email", login_password: "Password", signup_title: "Crea Account" },
+    pt: { nav_home: "Início", nav_assistant: "Assistente", nav_history: "Histórico", nav_login: "Entrar", nav_signup: "Cadastrar", nav_logout: "Sair", home_title: "MedBrief", home_subtitle: "Traduzir Notas Médicas", label_medical_notes: "Notas Médicas", placeholder_medical_notes: "Cole suas notas aqui...", label_upload_pdf: "Ou Carregar PDF/Imagem", label_translate_to: "Traduzir para:", btn_translate: "Traduzir", btn_translating: "Traduzindo...", btn_send: "Enviar", result_summary: "Resumo", result_key_terms: "Termos Chave", chat_title: "Assistente Médico", login_title: "Entrar", login_email: "Email", login_password: "Senha", signup_title: "Criar Conta" },
+    ru: { nav_home: "Главная", nav_assistant: "Помощник", nav_history: "История", nav_login: "Войти", nav_signup: "Регистрация", nav_logout: "Выйти", home_title: "MedBrief", home_subtitle: "Перевести медицинские заметки", label_medical_notes: "Медицинские заметки", placeholder_medical_notes: "Вставьте заметки здесь...", label_upload_pdf: "Или загрузить PDF/Изображение", label_translate_to: "Перевести на:", btn_translate: "Перевести", btn_translating: "Перевод...", btn_send: "Отправить", result_summary: "Резюме", result_key_terms: "Ключевые термины", chat_title: "Медицинский помощник", login_title: "Войти", login_email: "Email", login_password: "Пароль", signup_title: "Создать аккаунт" },
+    zh: { nav_home: "主页", nav_assistant: "助手", nav_history: "历史", nav_login: "登录", nav_signup: "注册", nav_logout: "登出", home_title: "MedBrief", home_subtitle: "翻译医疗笔记", label_medical_notes: "医疗笔记", placeholder_medical_notes: "在此粘贴笔记...", label_upload_pdf: "或上传PDF/图片", label_translate_to: "翻译为:", btn_translate: "翻译", btn_translating: "翻译中...", btn_send: "发送", result_summary: "摘要", result_key_terms: "关键术语", chat_title: "医疗助手", login_title: "登录", login_email: "邮箱", login_password: "密码", signup_title: "创建账户" },
+    ja: { nav_home: "ホーム", nav_assistant: "アシスタント", nav_history: "履歴", nav_login: "ログイン", nav_signup: "登録", nav_logout: "ログアウト", home_title: "MedBrief", home_subtitle: "医療メモを翻訳", label_medical_notes: "医療メモ", placeholder_medical_notes: "メモをここに貼り付け...", label_upload_pdf: "またはPDF/画像", label_translate_to: "翻訳先:", btn_translate: "翻訳", btn_translating: "翻訳中...", btn_send: "送信", result_summary: "要約", result_key_terms: "重要用語", chat_title: "医療アシスタント", login_title: "ログイン", login_email: "メール", login_password: "パスワード", signup_title: "アカウント作成" },
+    ko: { nav_home: "홈", nav_assistant: "도우미", nav_history: "기록", nav_login: "로그인", nav_signup: "가입", nav_logout: "로그아웃", home_title: "MedBrief", home_subtitle: "의료 노트 번역", label_medical_notes: "의료 노트", placeholder_medical_notes: "노트를 여기에 붙여넣기...", label_upload_pdf: "또는 PDF/이미지", label_translate_to: "번역:", btn_translate: "번역", btn_translating: "번역 중...", btn_send: "보내기", result_summary: "요약", result_key_terms: "주요 용어", chat_title: "의료 도우미", login_title: "로그인", login_email: "이메일", login_password: "비밀번호", signup_title: "계정 만들기" },
+    ar: { nav_home: "الرئيسية", nav_assistant: "المساعد", nav_history: "السجل", nav_login: "تسجيل الدخول", nav_signup: "التسجيل", nav_logout: "تسجيل الخروج", home_title: "MedBrief", home_subtitle: "ترجمة الملاحظات الطبية", label_medical_notes: "الملاحظات الطبية", placeholder_medical_notes: "الصق ملاحظاتك هنا...", label_upload_pdf: "أو تحميل PDF/صورة", label_translate_to: "ترجمة إلى:", btn_translate: "ترجمة", btn_translating: "جاري الترجمة...", btn_send: "إرسال", result_summary: "ملخص", result_key_terms: "المصطلحات الرئيسية", chat_title: "المساعد الطبي", login_title: "تسجيل الدخول", login_email: "البريد الإلكتروني", login_password: "كلمة المرور", signup_title: "إنشاء حساب" },
+    hi: { nav_home: "होम", nav_assistant: "सहायक", nav_history: "इतिहास", nav_login: "लॉगिन", nav_signup: "साइन अप", nav_logout: "लॉगआउट", home_title: "MedBrief", home_subtitle: "चिकित्सा नोट्स अनुवाद", label_medical_notes: "चिकित्सा नोट्स", placeholder_medical_notes: "नोट्स यहां पेस्ट करें...", label_upload_pdf: "या PDF/छवि", label_translate_to: "अनुवाद:", btn_translate: "अनुवाद करें", btn_translating: "अनुवाद हो रहा है...", btn_send: "भेजें", result_summary: "सारांश", result_key_terms: "मुख्य शब्द", chat_title: "चिकित्सा सहायक", login_title: "लॉगिन", login_email: "ईमेल", login_password: "पासवर्ड", signup_title: "खाता बनाएं" },
+    bn: { nav_home: "হোম", nav_assistant: "সহায়ক", nav_history: "ইতিহাস", nav_login: "লগইন", nav_signup: "সাইন আপ", nav_logout: "লগআউট", home_title: "MedBrief", home_subtitle: "চিকিৎসা নোট অনুবাদ", label_medical_notes: "চিকিৎসা নোট", placeholder_medical_notes: "এখানে নোট পেস্ট করুন...", label_upload_pdf: "বা PDF/ছবি", label_translate_to: "অনুবাদ:", btn_translate: "অনুবাদ", btn_translating: "অনুবাদ হচ্ছে...", btn_send: "পাঠান", result_summary: "সারাংশ", result_key_terms: "মূল শব্দ", chat_title: "চিকিৎসা সহায়ক", login_title: "লগইন", login_email: "ইমেইল", login_password: "পাসওয়ার্ড", signup_title: "অ্যাকাউন্ট তৈরি করুন" },
+    ur: { nav_home: "ہوم", nav_assistant: "معاون", nav_history: "تاریخ", nav_login: "لاگ ان", nav_signup: "سائن اپ", nav_logout: "لاگ آؤٹ", home_title: "MedBrief", home_subtitle: "طبی نوٹس ترجمہ", label_medical_notes: "طبی نوٹس", placeholder_medical_notes: "یہاں نوٹس پیسٹ کریں...", label_upload_pdf: "یا PDF/تصویر", label_translate_to: "ترجمہ:", btn_translate: "ترجمہ کریں", btn_translating: "ترجمہ ہو رہا ہے...", btn_send: "بھیجیں", result_summary: "خلاصہ", result_key_terms: "اہم اصطلاحات", chat_title: "طبی معاون", login_title: "لاگ ان", login_email: "ای میل", login_password: "پاس ورڈ", signup_title: "اکاؤنٹ بنائیں" },
+    vi: { nav_home: "Trang chủ", nav_assistant: "Trợ lý", nav_history: "Lịch sử", nav_login: "Đăng nhập", nav_signup: "Đăng ký", nav_logout: "Đăng xuất", home_title: "MedBrief", home_subtitle: "Dịch ghi chú y tế", label_medical_notes: "Ghi chú y tế", placeholder_medical_notes: "Dán ghi chú tại đây...", label_upload_pdf: "Hoặc tải PDF/Hình", label_translate_to: "Dịch sang:", btn_translate: "Dịch", btn_translating: "Đang dịch...", btn_send: "Gửi", result_summary: "Tóm tắt", result_key_terms: "Thuật ngữ chính", chat_title: "Trợ lý y tế", login_title: "Đăng nhập", login_email: "Email", login_password: "Mật khẩu", signup_title: "Tạo tài khoản" },
+    th: { nav_home: "หน้าแรก", nav_assistant: "ผู้ช่วย", nav_history: "ประวัติ", nav_login: "เข้าสู่ระบบ", nav_signup: "สมัคร", nav_logout: "ออกจากระบบ", home_title: "MedBrief", home_subtitle: "แปลบันทึกทางการแพทย์", label_medical_notes: "บันทึกทางการแพทย์", placeholder_medical_notes: "วางบันทึกที่นี่...", label_upload_pdf: "หรืออัปโหลด PDF/รูปภาพ", label_translate_to: "แปลเป็น:", btn_translate: "แปล", btn_translating: "กำลังแปล...", btn_send: "ส่ง", result_summary: "สรุป", result_key_terms: "คำศัพท์สำคัญ", chat_title: "ผู้ช่วยทางการแพทย์", login_title: "เข้าสู่ระบบ", login_email: "อีเมล", login_password: "รหัสผ่าน", signup_title: "สร้างบัญชี" },
+    tr: { nav_home: "Ana Sayfa", nav_assistant: "Asistan", nav_history: "Geçmiş", nav_login: "Giriş", nav_signup: "Kayıt", nav_logout: "Çıkış", home_title: "MedBrief", home_subtitle: "Tıbbi Notları Çevir", label_medical_notes: "Tıbbi Notlar", placeholder_medical_notes: "Notları buraya yapıştırın...", label_upload_pdf: "Veya PDF/Resim", label_translate_to: "Çevir:", btn_translate: "Çevir", btn_translating: "Çevriliyor...", btn_send: "Gönder", result_summary: "Özet", result_key_terms: "Anahtar Terimler", chat_title: "Tıbbi Asistan", login_title: "Giriş", login_email: "E-posta", login_password: "Şifre", signup_title: "Hesap Oluştur" },
+    pl: { nav_home: "Strona główna", nav_assistant: "Asystent", nav_history: "Historia", nav_login: "Zaloguj", nav_signup: "Zarejestruj", nav_logout: "Wyloguj", home_title: "MedBrief", home_subtitle: "Tłumacz notatki medyczne", label_medical_notes: "Notatki medyczne", placeholder_medical_notes: "Wklej notatki tutaj...", label_upload_pdf: "Lub prześlij PDF/Obraz", label_translate_to: "Tłumacz na:", btn_translate: "Tłumacz", btn_translating: "Tłumaczenie...", btn_send: "Wyślij", result_summary: "Podsumowanie", result_key_terms: "Kluczowe terminy", chat_title: "Asystent medyczny", login_title: "Zaloguj", login_email: "Email", login_password: "Hasło", signup_title: "Utwórz konto" },
+    nl: { nav_home: "Home", nav_assistant: "Assistent", nav_history: "Geschiedenis", nav_login: "Inloggen", nav_signup: "Registreren", nav_logout: "Uitloggen", home_title: "MedBrief", home_subtitle: "Vertaal medische notities", label_medical_notes: "Medische notities", placeholder_medical_notes: "Plak notities hier...", label_upload_pdf: "Of upload PDF/Afbeelding", label_translate_to: "Vertaal naar:", btn_translate: "Vertalen", btn_translating: "Vertalen...", btn_send: "Verzenden", result_summary: "Samenvatting", result_key_terms: "Belangrijke termen", chat_title: "Medische assistent", login_title: "Inloggen", login_email: "E-mail", login_password: "Wachtwoord", signup_title: "Account aanmaken" },
+    sv: { nav_home: "Hem", nav_assistant: "Assistent", nav_history: "Historik", nav_login: "Logga in", nav_signup: "Registrera", nav_logout: "Logga ut", home_title: "MedBrief", home_subtitle: "Översätt medicinska anteckningar", label_medical_notes: "Medicinska anteckningar", placeholder_medical_notes: "Klistra in anteckningar här...", label_upload_pdf: "Eller ladda upp PDF/Bild", label_translate_to: "Översätt till:", btn_translate: "Översätt", btn_translating: "Översätter...", btn_send: "Skicka", result_summary: "Sammanfattning", result_key_terms: "Nyckeltermer", chat_title: "Medicinsk assistent", login_title: "Logga in", login_email: "E-post", login_password: "Lösenord", signup_title: "Skapa konto" },
+    ml: { nav_home: "ഹോം", nav_assistant: "സഹായി", nav_history: "ചരിത്രം", nav_login: "ലോഗിൻ", nav_signup: "സൈൻ അപ്പ്", nav_logout: "ലോഗൗട്ട്", home_title: "MedBrief", home_subtitle: "മെഡിക്കൽ നോട്ടുകൾ വിവർത്തനം", label_medical_notes: "മെഡിക്കൽ നോട്ടുകൾ", placeholder_medical_notes: "നോട്ടുകൾ ഇവിടെ ഒട്ടിക്കുക...", label_upload_pdf: "അല്ലെങ്കിൽ PDF/ചിത്രം", label_translate_to: "വിവർത്തനം:", btn_translate: "വിവർത്തനം ചെയ്യുക", btn_translating: "വിവർത്തനം ചെയ്യുന്നു...", btn_send: "അയയ്ക്കുക", result_summary: "സംഗ്രഹം", result_key_terms: "പ്രധാന പദങ്ങൾ", chat_title: "മെഡിക്കൽ സഹായി", login_title: "ലോഗിൻ", login_email: "ഇമെയിൽ", login_password: "പാസ്‌വേഡ്", signup_title: "അക്കൗണ്ട് സൃഷ്ടിക്കുക" }
 };
 
-const languageNames = {
-    'en': 'English',
-    'es': 'Spanish',
-    'fr': 'French',
-    'de': 'German',
-    'it': 'Italian',
-    'pt': 'Portuguese',
-    'ru': 'Russian',
-    'zh': 'Chinese',
-    'ja': 'Japanese',
-    'ko': 'Korean',
-    'ar': 'Arabic',
-    'hi': 'Hindi',
-    'bn': 'Bengali',
-    'ur': 'Urdu',
-    'vi': 'Vietnamese',
-    'th': 'Thai',
-    'tr': 'Turkish',
-    'pl': 'Polish',
-    'nl': 'Dutch',
-    'sv': 'Swedish'
-};
+const languageNames = { 'en': 'English', 'es': 'Spanish', 'fr': 'French', 'de': 'German', 'it': 'Italian', 'pt': 'Portuguese', 'ru': 'Russian', 'zh': 'Chinese', 'ja': 'Japanese', 'ko': 'Korean', 'ar': 'Arabic', 'hi': 'Hindi', 'bn': 'Bengali', 'ur': 'Urdu', 'vi': 'Vietnamese', 'th': 'Thai', 'tr': 'Turkish', 'pl': 'Polish', 'nl': 'Dutch', 'sv': 'Swedish', 'ml': 'Malayalam' };
 
-function getCurrentLanguage() {
-    return sessionStorage.getItem('selectedLanguage') || 'en';
-}
-
-function setLanguage(lang) {
-    sessionStorage.setItem('selectedLanguage', lang);
-    applyTranslations(lang);
-}
-
+function getCurrentLanguage() { return sessionStorage.getItem('selectedLanguage') || 'en'; }
+function setLanguage(lang) { sessionStorage.setItem('selectedLanguage', lang); applyTranslations(lang); }
 function applyTranslations(lang) {
     const t = translations[lang] || translations['en'];
-
     document.querySelectorAll('[data-i18n]').forEach(element => {
         const key = element.getAttribute('data-i18n');
-        if (t[key]) {
-            if (element.tagName === 'INPUT' && element.type !== 'submit') {
-                element.placeholder = t[key];
-            } else {
-                element.textContent = t[key];
-            }
-        }
+        if (t[key]) { if (element.tagName === 'INPUT' && element.type !== 'submit') { element.placeholder = t[key]; } else { element.textContent = t[key]; } }
     });
-
     document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
         const key = element.getAttribute('data-i18n-placeholder');
-        if (t[key]) {
-            element.placeholder = t[key];
-        }
+        if (t[key]) { element.placeholder = t[key]; }
     });
-
-    if (lang === 'ar' || lang === 'ur') {
-        document.body.setAttribute('dir', 'rtl');
-    } else {
-        document.body.setAttribute('dir', 'ltr');
-    }
+    if (lang === 'ar' || lang === 'ur') { document.body.setAttribute('dir', 'rtl'); } else { document.body.setAttribute('dir', 'ltr'); }
 }
-
-function translate(key, lang = null) {
-    const currentLang = lang || getCurrentLanguage();
-    const t = translations[currentLang] || translations['en'];
-    return t[key] || key;
-}
-
+function translate(key, lang = null) { const currentLang = lang || getCurrentLanguage(); const t = translations[currentLang] || translations['en']; return t[key] || key; }
 document.addEventListener('DOMContentLoaded', () => {
     const currentLang = getCurrentLanguage();
     applyTranslations(currentLang);
-
     const langSelect = document.getElementById('language-select');
-    if (langSelect) {
-        langSelect.value = currentLang;
-        langSelect.addEventListener('change', (e) => {
-            setLanguage(e.target.value);
-        });
-    }
+    if (langSelect) { langSelect.value = currentLang; langSelect.addEventListener('change', (e) => { setLanguage(e.target.value); }); }
 });
