@@ -22,8 +22,12 @@ SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
-AUDIO_DIR = os.path.join(app.root_path, 'static', 'audio')
+if os.environ.get('VERCEL'):
+    AUDIO_DIR = '/tmp/audio'
+else:
+    AUDIO_DIR = os.path.join(app.root_path, 'static', 'audio')
 os.makedirs(AUDIO_DIR, exist_ok=True)
+
 
 @app.route('/')
 def index():
