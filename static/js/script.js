@@ -128,6 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 contextToSave = text;
             }
             sessionStorage.setItem('medicalContext', contextToSave);
+            sessionStorage.setItem('selectedLanguage', selectedLanguage);
 
             resultSection.classList.remove('hidden');
 

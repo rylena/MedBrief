@@ -203,9 +203,37 @@ def chat():
     data = request.get_json()
     message = data.get('message')
     context = data.get('context')
+    language = data.get('language', 'en')
 
     if not message:
         return jsonify({'error': 'No message provided'}), 400
+
+    language_names = {
+        'en': 'English',
+        'es': 'Spanish',
+        'fr': 'French',
+        'de': 'German',
+        'it': 'Italian',
+        'pt': 'Portuguese',
+        'ru': 'Russian',
+        'zh': 'Chinese',
+        'ja': 'Japanese',
+        'ko': 'Korean',
+        'ar': 'Arabic',
+        'hi': 'Hindi',
+        'bn': 'Bengali',
+        'ur': 'Urdu',
+        'vi': 'Vietnamese',
+        'th': 'Thai',
+        'tr': 'Turkish',
+        'pl': 'Polish',
+        'nl': 'Dutch',
+        'sv': 'Swedish'
+    }
+
+    language_instruction = ""
+    if language != 'en':
+        language_instruction = f"\nIMPORTANT: Answer in {language_names.get(language, 'the selected language')}. Provide your entire response in {language_names.get(language, 'the selected language')}."
 
     try:
         prompt = f"""
@@ -213,10 +241,9 @@ def chat():
         {context}
 
         User Question: {message}
+        {language_instruction}
 
-        IMPORTANT: Answer in Hindi (हिन्दी). Provide your entire response in Hindi language.
-        
-        Answer the user's question based on the medical note provided. Keep the answer simple (Grade 8 level) and helpful. If the answer is not in the note, say so in Hindi.
+        Answer the user's question based on the medical note provided. Keep the answer simple (Grade 8 level) and helpful. If the answer is not in the note, say so.
         """
         model = get_genai_model()
         response = model.generate_content(prompt)

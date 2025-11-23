@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatLoading = document.getElementById('chat-loading');
 
     const currentContext = sessionStorage.getItem('medicalContext') || "";
+    const selectedLanguage = sessionStorage.getItem('selectedLanguage') || 'en';
 
     if (!currentContext) {
         addChatMessage("I don't see any recent medical note to discuss. Please go to the Home page and translate a note first.", 'bot');
@@ -29,7 +30,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch('/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: message, context: currentContext })
+                body: JSON.stringify({
+                    message: message,
+                    context: currentContext,
+                    language: selectedLanguage
+                })
             });
 
             const data = await response.json();
