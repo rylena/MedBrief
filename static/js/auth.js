@@ -1,16 +1,15 @@
-const SUPABASE_URL = 'https://ngrblqyvchdvqnwpjdpv.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ncmJscXl2Y2hkdnFud3BqZHB2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM4ODM2MjQsImV4cCI6MjA3OTQ1OTYyNH0.rXdMuF0kB13Y9w6dIJD4ebZ7fgDOLUaPAPjCIq_MfEs';
+const { createClient } = supabase;
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const SUPABASE_URL = 'https://qdvhkwqfpxwqcbvbqhwp.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFkdmhrd3FmcHh3cWNidmJxaHdwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzI0MzE5NjUsImV4cCI6MjA0ODAwNzk2NX0.aBQvBVFGELQxdJLnVQHHmJtHuQJtLEwMKNLKNxvPHJI';
+
+const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 document.addEventListener('DOMContentLoaded', async () => {
-    const loginForm = document.getElementById('login-form');
-    const signupForm = document.getElementById('signup-form');
     const authError = document.getElementById('auth-error');
-    const logoutBtn = document.getElementById('logout-btn');
-    const loginLink = document.getElementById('login-link');
+    const loginLink = document.getElementById('login-link'); // Keep this if not explicitly removed
 
-    const { data: { session } } = await supabase.auth.getSession();
+    const { data: { session } } = await supabaseClient.auth.getSession();
 
     const publicPages = ['/login', '/signup'];
     const isPublicPage = publicPages.includes(window.location.pathname);
@@ -25,19 +24,29 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
+    const logoutBtn = document.getElementById('logout-btn');
     if (logoutBtn) {
-        logoutBtn.classList.remove('hidden');
+        if (session) {
+            logoutBtn.classList.remove('hidden');
+        }
+
+        logoutBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            await supabaseClient.auth.signOut();
+            window.location.href = '/login';
+        });
     }
 
+    const loginForm = document.getElementById('login-form');
     if (loginForm) {
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
 
             authError.classList.add('hidden');
 
-            const { data, error } = await supabase.auth.signInWithPassword({
+            const { data, error } = await supabaseClient.auth.signInWithPassword({
                 email,
                 password
             });
