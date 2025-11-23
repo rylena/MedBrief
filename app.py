@@ -202,7 +202,9 @@ def summarize():
             key_terms = []
             medications = []
 
-        tts = gTTS(text=summary, lang='en')
+        tts_lang = target_language if target_language in ['en', 'es', 'fr', 'de', 'it', 'pt', 'ru', 'zh', 'ja', 'ko', 'ar', 'hi', 'bn', 'ur', 'vi', 'th', 'tr', 'pl', 'nl', 'sv', 'ml'] else 'en'
+        
+        tts = gTTS(text=summary, lang=tts_lang)
         filename = f"{uuid.uuid4()}.mp3"
         filepath = os.path.join(AUDIO_DIR, filename)
         tts.save(filepath)
