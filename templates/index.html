@@ -15,25 +15,25 @@
     <div class="app-container">
         <aside class="sidebar">
             <div class="logo">
-                <h1>MedBrief</h1>
+                <h1 data-i18n="home_title">MedBrief</h1>
                 <p>Patient Translator</p>
             </div>
 
             <nav class="nav-menu">
                 <a href="/" class="sidebar-btn active">
-                    <span class="icon">🏠</span> Home
+                    <span class="icon">🏠</span> <span data-i18n="nav_home">Home</span>
                 </a>
 
                 <a href="/history" class="sidebar-btn">
-                    <span class="icon">📂</span> My Notes
+                    <span class="icon">📂</span> <span data-i18n="nav_history">History</span>
                 </a>
 
                 <a href="/assistant" class="sidebar-btn">
-                    <span class="icon">💬</span> Ask Assistant
+                    <span class="icon">💬</span> <span data-i18n="nav_assistant">Ask Assistant</span>
                 </a>
 
                 <a href="#" id="logout-btn" class="sidebar-btn hidden">
-                    <span class="icon">🚪</span> Logout
+                    <span class="icon">🚪</span> <span data-i18n="nav_logout">Logout</span>
                 </a>
             </nav>
 
@@ -44,28 +44,32 @@
 
         <main class="main-content">
             <header>
-                <h2>Simplify Your Medical Notes</h2>
+                <h2 data-i18n="home_subtitle">Simplify Your Medical Notes</h2>
             </header>
 
             <section class="input-section">
-                <div class="textarea-container">
-                    <textarea id="medical-notes" placeholder="Paste your medical notes here..."></textarea>
-                </div>
+                <label for="medical-notes">
+                    <strong data-i18n="label_medical_notes">Enter Medical Notes</strong>
+                </label>
+                <textarea id="medical-notes" data-i18n-placeholder="placeholder_medical_notes"
+                    placeholder="Paste your medical notes here..."></textarea>
 
-                <div class="separator">OR</div>
-
+                <label for="pdf-upload">
+                    <strong data-i18n="label_upload_pdf">Or Upload PDF/Image</strong>
+                </label>
                 <label for="pdf-upload" class="file-upload-label">
-                    <span>Upload Medical Report (PDF) or Image (X-Ray, Scan)</span>
-                    <input type="file" id="pdf-upload" accept=".pdf, image/*">
+                    <input type="file" id="pdf-upload" accept=".pdf,image/*" hidden>
+                    <span>📄 Choose File</span>
                 </label>
 
                 <div class="privacy-control">
                     <input type="checkbox" id="privacy-mode">
-                    <label for="privacy-mode">Enable Privacy Filter (Redact Names/Dates)</label>
+                    <label for="privacy-mode" data-i18n="label_privacy">Enable Privacy Filter (Redact
+                        Names/Dates)</label>
                 </div>
 
                 <div class="language-selector">
-                    <label for="language-select">Translate summary to:</label>
+                    <label for="language-select" data-i18n="label_translate_to">Translate summary to:</label>
                     <select id="language-select" class="language-dropdown">
                         <option value="en">English</option>
                         <option value="es">Spanish (Español)</option>
@@ -93,40 +97,29 @@
                 <div id="error-message" class="error-message hidden"></div>
 
                 <button id="translate-btn" class="primary-btn">
-                    <span class="btn-text">Translate to Simple English</span>
+                    <span class="btn-text" data-i18n="btn_translate">Translate to Simple English</span>
                     <span class="loader hidden"></span>
                 </button>
             </section>
 
             <section id="result-section" class="result-section hidden">
-                <h3>Your Summary</h3>
                 <div class="summary-card">
+                    <h3 data-i18n="result_summary">Summary</h3>
                     <p id="summary-text"></p>
                 </div>
 
-                <div id="key-terms-container" class="key-terms-container hidden">
-                    <h4>Key Medical Terms</h4>
-                    <div id="key-terms-list" class="key-terms-list"></div>
-                </div>
+                <audio id="audio-player" controls></audio>
 
-                <div class="audio-control">
-                    <h4>Listen to Summary</h4>
-                    <audio id="audio-player" controls>
-                        Your browser does not support the audio element.
-                    </audio>
+                <div id="key-terms-container" class="key-terms-container hidden">
+                    <h4 data-i18n="result_key_terms">Key Medical Terms</h4>
+                    <div id="key-terms-list" class="key-terms-list"></div>
                 </div>
             </section>
         </main>
     </div>
-
-    <div id="drag-overlay" class="drag-overlay hidden">
-        <div class="drag-content">
-            <span class="icon">📂</span>
-            <h3>Drop file to analyze</h3>
-        </div>
-    </div>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="{{ url_for('static', filename='js/translations.js') }}"></script>
     <script src="{{ url_for('static', filename='js/mobile-menu.js') }}"></script>
     <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
