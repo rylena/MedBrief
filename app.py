@@ -161,6 +161,10 @@ def summarize():
         1. Provide a 3-5 sentence summary at a Grade 8 reading level for a patient. Explain what the medical content means in simple terms.
         2. Extract 3-5 key medical terms from the content that a patient might not understand.
         3. Extract any prescribed medications with their details.
+        4. Determine the severity/urgency level:
+           - "routine": Regular checkup, non-urgent, follow-up
+           - "monitor": Needs attention, watch symptoms, moderate concern
+           - "urgent": Immediate attention needed, serious condition, emergency
         {language_instruction}
         
         Format your response exactly as this JSON:
@@ -174,7 +178,8 @@ def summarize():
                     "frequency": "twice daily" or "Not specified",
                     "purpose": "what it treats" or "Not specified"
                 }}
-            ]
+            ],
+            "severity": "routine" or "monitor" or "urgent"
         }}
         
         If no medications are mentioned, return an empty medications array.
@@ -197,10 +202,12 @@ def summarize():
             summary = result.get('summary', 'Summary not available.')
             key_terms = result.get('key_terms', [])
             medications = result.get('medications', [])
+            severity = result.get('severity', 'routine')
         except json.JSONDecodeError:
             summary = response.text
             key_terms = []
             medications = []
+            severity = 'routine'
 
         tts_lang = target_language if target_language in ['en', 'es', 'fr', 'de', 'it', 'pt', 'ru', 'zh', 'ja', 'ko', 'ar', 'hi', 'bn', 'ur', 'vi', 'th', 'tr', 'pl', 'nl', 'sv', 'ml'] else 'en'
         
@@ -214,6 +221,7 @@ def summarize():
             'summary': summary,
             'key_terms': key_terms,
             'medications': medications,
+            'severity': severity,
             'audio_url': audio_url
         })
 

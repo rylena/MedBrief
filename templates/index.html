@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/print.css') }}">
 </head>
 
 <body>
@@ -51,8 +52,14 @@
                 <label for="medical-notes">
                     <strong data-i18n="label_medical_notes">Enter Medical Notes</strong>
                 </label>
-                <textarea id="medical-notes" data-i18n-placeholder="placeholder_medical_notes"
-                    placeholder="Paste your medical notes here..."></textarea>
+                <div class="textarea-container">
+                    <textarea id="medical-notes" data-i18n-placeholder="placeholder_medical_notes"
+                        placeholder="Paste your medical notes here..."></textarea>
+                    <button type="button" id="voice-input-btn" class="voice-input-btn" onclick="toggleVoiceInput()"
+                        title="Voice input">
+                        <span class="voice-icon">🎤</span>
+                    </button>
+                </div>
 
                 <label for="pdf-upload">
                     <strong data-i18n="label_upload_pdf">Or Upload PDF/Image</strong>
@@ -104,6 +111,15 @@
             </section>
 
             <section id="result-section" class="result-section hidden">
+                <div class="action-buttons">
+                    <button onclick="window.print()" class="print-btn">🖨️ Print</button>
+                </div>
+
+                <div id="severity-indicator" class="severity-indicator hidden">
+                    <span class="severity-badge"></span>
+                    <span class="severity-text"></span>
+                </div>
+
                 <div class="summary-card">
                     <h3 data-i18n="result_summary">Summary</h3>
                     <p id="summary-text"></p>
@@ -151,6 +167,7 @@
     <script src="{{ url_for('static', filename='js/translations.js') }}"></script>
     <script src="{{ url_for('static', filename='js/mobile-menu.js') }}"></script>
     <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/voice-input.js') }}"></script>
     <script src="{{ url_for('static', filename='js/share.js') }}"></script>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>

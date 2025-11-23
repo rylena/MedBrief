@@ -144,6 +144,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 medicationsSection.classList.remove('hidden');
             }
 
+            if (data.severity) {
+                const severityIndicator = document.getElementById('severity-indicator');
+                const severityBadge = severityIndicator.querySelector('.severity-badge');
+                const severityText = severityIndicator.querySelector('.severity-text');
+
+                const severityConfig = {
+                    'routine': { icon: '🟢', text: 'Routine - Non-urgent', class: 'routine' },
+                    'monitor': { icon: '🟡', text: 'Monitor - Needs attention', class: 'monitor' },
+                    'urgent': { icon: '🔴', text: 'Urgent - Seek immediate care', class: 'urgent' }
+                };
+
+                const config = severityConfig[data.severity] || severityConfig['routine'];
+                severityBadge.textContent = config.icon;
+                severityText.textContent = config.text;
+                severityIndicator.className = `severity-indicator ${config.class}`;
+                severityIndicator.classList.remove('hidden');
+            }
+
             let contextToSave = "";
             if (!text && file) {
                 contextToSave = `Summary of the note: ${data.summary}`;
