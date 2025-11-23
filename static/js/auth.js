@@ -60,17 +60,19 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
+    const signupForm = document.getElementById('signup-form');
     if (signupForm) {
         signupForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            const errorDiv = document.getElementById('auth-error');
 
             authError.classList.add('hidden');
 
-            const { data, error } = await supabase.auth.signUp({
+            const { data, error } = await supabaseClient.auth.signUp({
                 email,
-                password
+                password,
             });
 
             if (error) {
