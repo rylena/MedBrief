@@ -1,0 +1,5 @@
+flask
+google-generativeai
+gTTS
+pypdf
+python-dotenv

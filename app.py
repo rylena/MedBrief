@@ -1,0 +1,169 @@
+import os
+import uuid
+import json
+from flask import Flask, render_template, request, jsonify, send_from_directory
+import google.generativeai as genai
+from gtts import gTTS
+from pypdf import PdfReader
+from dotenv import load_dotenv
+
+load_dotenv()
+
+app = Flask(__name__)
+
+from supabase import create_client, Client
+
+
+GENAI_API_KEY = os.getenv("GENAI_API_KEY")
+genai.configure(api_key=GENAI_API_KEY)
+model = genai.GenerativeModel('gemini-flash-latest')
+
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_KEY = os.getenv("SUPABASE_KEY")
+supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
+
+AUDIO_DIR = os.path.join(app.root_path, 'static', 'audio')
+os.makedirs(AUDIO_DIR, exist_ok=True)
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/assistant')
+def assistant():
+    return render_template('chat.html')
+
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
+@app.route('/signup')
+def signup():
+    return render_template('signup.html')
+
+@app.route('/history')
+def history():
+    return render_template('history.html')
+
+import re
+
+import PIL.Image
+
+@app.route('/summarize', methods=['POST'])
+def summarize():
+    text = ""
+    image_part = None
+    
+    if 'file' in request.files:
+        file = request.files['file']
+        if file.filename != '':
+            try:
+                if file.mimetype.startswith('image/'):
+                    image = PIL.Image.open(file)
+                    image_part = image
+                    print("Image loaded successfully.")
+                elif file.filename.endswith('.pdf'):
+                    reader = PdfReader(file)
+                    for page in reader.pages:
+                        page_text = page.extract_text()
+                        if page_text:
+                            text += page_text + "\n"
+                    print(f"Extracted {len(text)} characters from PDF.")
+            except Exception as e:
+                print(f"File processing error: {e}")
+                return jsonify({'error': f"Error processing file: {str(e)}"}), 400
+    
+    if not image_part and not text.strip():
+        if request.is_json:
+            data = request.get_json()
+            text = data.get('text', '')
+        else:
+            text = request.form.get('text', '')
+        
+        if not text.strip():
+            print("No text found in request.")
+            return jsonify({'error': 'Please provide text, a PDF, or an image.'}), 400
+
+    privacy_mode = request.form.get('privacy_mode') == 'true' or (request.is_json and request.get_json().get('privacy_mode') == True)
+    if privacy_mode and text:
+        text = re.sub(r'\b\d{3}-\d{2}-\d{4}\b', '[REDACTED_SSN]', text)
+        text = re.sub(r'\b(Mr\.|Mrs\.|Ms\.|Dr\.)\s+[A-Z][a-z]+', '[REDACTED_NAME]', text)
+        text = re.sub(r'\b\d{1,2}[/-]\d{1,2}[/-]\d{2,4}\b', '[REDACTED_DATE]', text)
+
+    try:
+        prompt_instruction = """
+        Analyze the following medical input (text or image). 
+        1. Provide a 3-5 sentence summary at a Grade 8 reading level for a patient. Explain what the medical content means in simple terms.
+        2. Extract 3-5 key medical terms from the content that a patient might not understand.
+        
+        Format your response exactly as this JSON:
+        {
+            "summary": "The summary text here...",
+            "key_terms": ["term1", "term2", "term3"]
+        }
+        """
+        
+        content_parts = [prompt_instruction]
+        if image_part:
+            content_parts.append(image_part)
+            content_parts.append("Explain this medical image.")
+        if text:
+            content_parts.append(text)
+
+        response = model.generate_content(content_parts)
+        
+        response_text = response.text.replace('```json', '').replace('```', '').strip()
+        
+        try:
+            result = json.loads(response_text)
+            summary = result.get('summary', 'Summary not available.')
+            key_terms = result.get('key_terms', [])
+        except json.JSONDecodeError:
+            summary = response.text
+            key_terms = []
+
+        tts = gTTS(text=summary, lang='en')
+        filename = f"{uuid.uuid4()}.mp3"
+        filepath = os.path.join(AUDIO_DIR, filename)
+        tts.save(filepath)
+        audio_url = f"/static/audio/{filename}"
+
+        return jsonify({
+            'summary': summary,
+            'key_terms': key_terms,
+            'audio_url': audio_url
+        })
+
+    except Exception as e:
+        print(f"Error during analysis: {e}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/chat', methods=['POST'])
+def chat():
+    data = request.get_json()
+    message = data.get('message')
+    context = data.get('context')
+
+    if not message:
+        return jsonify({'error': 'No message provided'}), 400
+
+    try:
+        prompt = f"""
+        Context (Medical Note):
+        {context}
+
+        User Question: {message}
+
+        Answer the user's question based on the medical note provided. Keep the answer simple (Grade 8 level) and helpful. If the answer is not in the note, say so.
+        """
+        response = model.generate_content(prompt)
+        return jsonify({'answer': response.text})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/static/audio/<path:filename>')
+def serve_audio(filename):
+    return send_from_directory(AUDIO_DIR, filename)
+
+if __name__ == '__main__':
+    app.run(debug=True)

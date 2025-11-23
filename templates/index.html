@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedBrief - Patient Friendly Translator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="logo">
+                <h1>MedBrief</h1>
+                <p>Patient Translator</p>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="/" class="sidebar-btn active">
+                    <span class="icon">🏠</span> Home
+                </a>
+
+                <a href="/history" class="sidebar-btn">
+                    <span class="icon">📂</span> My Notes
+                </a>
+
+                <a href="/assistant" class="sidebar-btn">
+                    <span class="icon">💬</span> Ask Assistant
+                </a>
+
+                <a href="#" id="logout-btn" class="sidebar-btn hidden">
+                    <span class="icon">🚪</span> Logout
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <p>Powered by Gemini AI</p>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header>
+                <h2>Simplify Your Medical Notes</h2>
+            </header>
+
+            <section class="input-section">
+                <div class="textarea-container">
+                    <textarea id="medical-notes" placeholder="Paste your medical notes here..."></textarea>
+                </div>
+
+                <div class="separator">OR</div>
+
+                <label for="pdf-upload" class="file-upload-label">
+                    <span>Upload Medical Report (PDF) or Image (X-Ray, Scan)</span>
+                    <input type="file" id="pdf-upload" accept=".pdf, image/*">
+                </label>
+
+                <div class="privacy-control">
+                    <input type="checkbox" id="privacy-mode">
+                    <label for="privacy-mode">Enable Privacy Filter (Redact Names/Dates)</label>
+                </div>
+
+                <div id="error-message" class="error-message hidden"></div>
+
+                <button id="translate-btn" class="primary-btn">
+                    <span class="btn-text">Translate to Simple English</span>
+                    <span class="loader hidden"></span>
+                </button>
+            </section>
+
+            <section id="result-section" class="result-section hidden">
+                <h3>Your Summary</h3>
+                <div class="summary-card">
+                    <p id="summary-text"></p>
+                </div>
+
+                <div id="key-terms-container" class="key-terms-container hidden">
+                    <h4>Key Medical Terms</h4>
+                    <div id="key-terms-list" class="key-terms-list"></div>
+                </div>
+
+                <div class="audio-control">
+                    <h4>Listen to Summary</h4>
+                    <audio id="audio-player" controls>
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="drag-overlay" class="drag-overlay hidden">
+        <div class="drag-content">
+            <span class="icon">📂</span>
+            <h3>Drop file to analyze</h3>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+
+</html>

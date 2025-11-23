@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Notes - MedBrief</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="logo">
+                <h1>MedBrief</h1>
+                <p>Patient Translator</p>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="/" class="sidebar-btn">
+                    <span class="icon">🏠</span> Home
+                </a>
+
+                <a href="/history" class="sidebar-btn active">
+                    <span class="icon">📂</span> My Notes
+                </a>
+
+                <a href="/assistant" class="sidebar-btn">
+                    <span class="icon">💬</span> Ask Assistant
+                </a>
+
+                <a href="#" id="logout-btn" class="sidebar-btn hidden">
+                    <span class="icon">🚪</span> Logout
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <p>Powered by Gemini AI</p>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header>
+                <h2>My Medical Notes</h2>
+                <p class="subtitle">Access your past translations and summaries.</p>
+            </header>
+
+            <div id="history-list" class="history-list">
+                <div class="loading-spinner">Loading notes...</div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const historyList = document.getElementById('history-list');
+            const { data: { session } } = await supabase.auth.getSession();
+
+            if (!session) {
+                window.location.href = '/login';
+                return;
+            }
+
+            const { data, error } = await supabase
+                .from('summaries')
+                .select('*')
+                .order('created_at', { ascending: false });
+
+            if (error) {
+                historyList.innerHTML = `<div class="error-message">Error loading notes: ${error.message}</div>`;
+                return;
+            }
+
+            if (data.length === 0) {
+                historyList.innerHTML = '<div class="empty-state">No notes found. Go to Home to add one!</div>';
+                return;
+            }
+
+            historyList.innerHTML = data.map(item => `
+                <div class="history-card">
+                    <div class="history-header">
+                        <span class="date">${new Date(item.created_at).toLocaleDateString()}</span>
+                        <span class="time">${new Date(item.created_at).toLocaleTimeString()}</span>
+                    </div>
+                    <div class="history-summary">
+                        ${item.summary}
+                    </div>
+                    <div class="history-terms">
+                        ${item.key_terms ? item.key_terms.map(term => `<span class="term-tag">${term}</span>`).join('') : ''}
+                    </div>
+                    ${item.audio_url ? `
+                    <div class="audio-control">
+                        <audio controls src="${item.audio_url}"></audio>
+                    </div>` : ''}
+                </div>
+            `).join('');
+        });
+    </script>
+</body>
+
+</html>
