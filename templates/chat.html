@@ -21,14 +21,18 @@
 
             <nav class="nav-menu">
                 <a href="/" class="sidebar-btn">
-                    <span class="icon">🏠</span> Home
+                    <span class="icon">🏠</span> <span data-i18n="nav_home">Home</span>
+                </a>
+
+                <a href="/history" class="sidebar-btn">
+                    <span class="icon">📂</span> <span data-i18n="nav_history">History</span>
                 </a>
 
                 <a href="/assistant" class="sidebar-btn active">
-                    <span class="icon">💬</span> Ask Assistant
+                    <span class="icon">💬</span> <span data-i18n="nav_assistant">Ask Assistant</span>
                 </a>
                 <a href="#" id="logout-btn" class="sidebar-btn hidden">
-                    <span class="icon">🚪</span> Logout
+                    <span class="icon">🚪</span> <span data-i18n="nav_logout">Logout</span>
                 </a>
             </nav>
 
@@ -39,7 +43,7 @@
 
         <main class="main-content chat-page">
             <header>
-                <h2>Medical Assistant</h2>
+                <h2 data-i18n="chat_title">Medical Assistant</h2>
                 <p class="subtitle">Ask questions about your recent medical note.</p>
             </header>
 
@@ -56,10 +60,10 @@
                 </div>
 
                 <div class="chat-input-area full-page-input">
-                    <input type="text" id="chat-input" placeholder="Ask a question about your diagnosis...">
-                    <div class="button-group">
-                        <button id="send-chat">Send</button>
-                    </div>
+                    <input type="text" id="chat-input" data-i18n-placeholder="chat_placeholder"
+                        placeholder="Ask a question...">
+                    <button id="send-chat" class="primary-btn" data-i18n="btn_send">Send</button>
+                    <div id="chat-loading-inline" class="chat-loading hidden">Thinking...</div>
                 </div>
             </div>
         </main>
@@ -67,6 +71,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="{{ url_for('static', filename='js/translations.js') }}"></script>
     <script src="{{ url_for('static', filename='js/mobile-menu.js') }}"></script>
     <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
     <script src="{{ url_for('static', filename='js/chat.js') }}"></script>

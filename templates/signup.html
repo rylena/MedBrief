@@ -18,25 +18,30 @@
                 <h1>MedBrief</h1>
                 <p>Patient Translator</p>
             </div>
-            <h2>Create Account</h2>
+            <h2 data-i18n="signup_title">Create Account</h2>
+            <p>Start simplifying your medical notes</p>
             <form id="signup-form">
                 <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" required placeholder="Enter your email">
+                    <label for="signup-email" data-i18n="signup_email">Email</label>
+                    <input type="email" id="signup-email" required placeholder="Enter your email">
                 </div>
                 <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" required placeholder="Create a password">
+                    <label for="signup-password" data-i18n="signup_password">Password</label>
+                    <input type="password" id="signup-password" required placeholder="Create a password">
                 </div>
                 <div id="auth-error" class="error-message hidden"></div>
-                <button type="submit" class="primary-btn">Sign Up</button>
+                <button type="submit" class="primary-btn" data-i18n="signup_btn">Sign Up</button>
             </form>
-            <p class="auth-link">Already have an account? <a href="/login">Login</a></p>
+            <p class="auth-link">
+                <span data-i18n="signup_have_account">Already have an account?</span> <a href="/login"
+                    data-i18n="signup_login_link">Login here</a>
+            </p>
             <p class="auth-link"><a href="/">Back to Home</a></p>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="{{ url_for('static', filename='js/translations.js') }}"></script>
     <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
 </body>
 
