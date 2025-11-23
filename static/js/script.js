@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const text = medicalNotesInput.value.trim();
         const file = pdfUpload.files[0];
         const privacyMode = privacyModeCheckbox.checked;
+        const selectedLanguage = document.getElementById('language-select').value;
 
         errorMessage.classList.add('hidden');
         errorMessage.textContent = '';
@@ -44,6 +45,29 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        const languageNames = {
+            'en': 'English',
+            'es': 'Spanish',
+            'fr': 'French',
+            'de': 'German',
+            'it': 'Italian',
+            'pt': 'Portuguese',
+            'ru': 'Russian',
+            'zh': 'Chinese',
+            'ja': 'Japanese',
+            'ko': 'Korean',
+            'ar': 'Arabic',
+            'hi': 'Hindi',
+            'bn': 'Bengali',
+            'ur': 'Urdu',
+            'vi': 'Vietnamese',
+            'th': 'Thai',
+            'tr': 'Turkish',
+            'pl': 'Polish',
+            'nl': 'Dutch',
+            'sv': 'Swedish'
+        };
+
         let loadingText = 'Translating...';
         if (file) {
             if (file.type.startsWith('image/')) {
@@ -51,6 +75,9 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 loadingText = 'Processing PDF...';
             }
+        }
+        if (selectedLanguage !== 'en') {
+            loadingText = `Translating to ${languageNames[selectedLanguage]}...`;
         }
         setLoading(true, loadingText);
         resultSection.classList.add('hidden');
@@ -63,6 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 formData.append('text', text);
             }
             formData.append('privacy_mode', privacyMode);
+            formData.append('language', selectedLanguage);
 
             const response = await fetch('/summarize', {
                 method: 'POST',

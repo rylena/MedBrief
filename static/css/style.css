@@ -282,6 +282,39 @@ textarea:focus {
     color: var(--text-muted);
 }
 
+.language-selector {
+    margin-top: 15px;
+}
+
+.language-selector label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    font-size: 1rem;
+    color: var(--text-color);
+}
+
+.language-dropdown {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: var(--border-radius);
+    font-family: var(--font-family);
+    font-size: 1rem;
+    background-color: white;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+.language-dropdown:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.language-dropdown:hover {
+    border-color: #c0c0c0;
+}
+
 .key-terms-container {
     margin-top: 20px;
 }

@@ -119,17 +119,47 @@ def summarize():
         text = re.sub(r'\b(Mr\.|Mrs\.|Ms\.|Dr\.)\s+[A-Z][a-z]+', '[REDACTED_NAME]', text)
         text = re.sub(r'\b\d{1,2}[/-]\d{1,2}[/-]\d{2,4}\b', '[REDACTED_DATE]', text)
 
+    target_language = request.form.get('language', 'en')
+    
+    language_names = {
+        'en': 'English',
+        'es': 'Spanish',
+        'fr': 'French',
+        'de': 'German',
+        'it': 'Italian',
+        'pt': 'Portuguese',
+        'ru': 'Russian',
+        'zh': 'Chinese',
+        'ja': 'Japanese',
+        'ko': 'Korean',
+        'ar': 'Arabic',
+        'hi': 'Hindi',
+        'bn': 'Bengali',
+        'ur': 'Urdu',
+        'vi': 'Vietnamese',
+        'th': 'Thai',
+        'tr': 'Turkish',
+        'pl': 'Polish',
+        'nl': 'Dutch',
+        'sv': 'Swedish'
+    }
+    
+    language_instruction = ""
+    if target_language != 'en':
+        language_instruction = f"\nIMPORTANT: Provide the entire response in {language_names.get(target_language, 'the selected language')}. Both the summary and key terms must be in {language_names.get(target_language, 'the selected language')}."
+
     try:
-        prompt_instruction = """
+        prompt_instruction = f"""
         Analyze the following medical input (text or image). 
         1. Provide a 3-5 sentence summary at a Grade 8 reading level for a patient. Explain what the medical content means in simple terms.
         2. Extract 3-5 key medical terms from the content that a patient might not understand.
+        {language_instruction}
         
         Format your response exactly as this JSON:
-        {
+        {{
             "summary": "The summary text here...",
             "key_terms": ["term1", "term2", "term3"]
-        }
+        }}
         """
         
         content_parts = [prompt_instruction]
