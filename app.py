@@ -214,7 +214,9 @@ def chat():
 
         User Question: {message}
 
-        Answer the user's question based on the medical note provided. Keep the answer simple (Grade 8 level) and helpful. If the answer is not in the note, say so.
+        IMPORTANT: Answer in Hindi (हिन्दी). Provide your entire response in Hindi language.
+        
+        Answer the user's question based on the medical note provided. Keep the answer simple (Grade 8 level) and helpful. If the answer is not in the note, say so in Hindi.
         """
         model = get_genai_model()
         response = model.generate_content(prompt)
