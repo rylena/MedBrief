@@ -13,20 +13,39 @@ app = Flask(__name__)
 
 from supabase import create_client, Client
 
+_genai_initialized = False
+_supabase_client = None
+_model = None
 
-GENAI_API_KEY = os.getenv("GENAI_API_KEY")
-genai.configure(api_key=GENAI_API_KEY)
-model = genai.GenerativeModel('gemini-flash-latest')
+def get_genai_model():
+    global _genai_initialized, _model
+    if not _genai_initialized:
+        GENAI_API_KEY = os.getenv("GENAI_API_KEY")
+        if GENAI_API_KEY:
+            genai.configure(api_key=GENAI_API_KEY)
+            _model = genai.GenerativeModel('gemini-flash-latest')
+            _genai_initialized = True
+    return _model
 
-SUPABASE_URL = os.getenv("SUPABASE_URL")
-SUPABASE_KEY = os.getenv("SUPABASE_KEY")
-supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
+def get_supabase():
+    global _supabase_client
+    if _supabase_client is None:
+        SUPABASE_URL = os.getenv("SUPABASE_URL")
+        SUPABASE_KEY = os.getenv("SUPABASE_KEY")
+        if SUPABASE_URL and SUPABASE_KEY:
+            _supabase_client = create_client(SUPABASE_URL, SUPABASE_KEY)
+    return _supabase_client
 
 if os.environ.get('VERCEL'):
     AUDIO_DIR = '/tmp/audio'
 else:
     AUDIO_DIR = os.path.join(app.root_path, 'static', 'audio')
-os.makedirs(AUDIO_DIR, exist_ok=True)
+
+try:
+    os.makedirs(AUDIO_DIR, exist_ok=True)
+except Exception:
+    pass
+
 
 
 @app.route('/')
@@ -114,6 +133,7 @@ def summarize():
         if text:
             content_parts.append(text)
 
+        model = get_genai_model()
         response = model.generate_content(content_parts)
         
         response_text = response.text.replace('```json', '').replace('```', '').strip()
@@ -160,6 +180,7 @@ def chat():
 
         Answer the user's question based on the medical note provided. Keep the answer simple (Grade 8 level) and helpful. If the answer is not in the note, say so.
         """
+        model = get_genai_model()
         response = model.generate_content(prompt)
         return jsonify({'answer': response.text})
     except Exception as e:
