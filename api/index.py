@@ -1,8 +1,18 @@
 import sys
 import os
 
-sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(current_dir)
 
-from app import app
+if parent_dir not in sys.path:
+    sys.path.insert(0, parent_dir)
 
-handler = app
+try:
+    from app import app
+except Exception as e:
+    print(f"Error importing app: {e}")
+    import traceback
+    traceback.print_exc()
+    raise
+
+app = app
