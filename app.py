@@ -74,6 +74,13 @@ def signup():
 def history():
     return render_template('history.html')
 
+@app.route('/api/config')
+def get_config():
+    return jsonify({
+        'supabaseUrl': os.getenv('SUPABASE_URL', 'https://ngrblqyvchdvqnwpjdpv.supabase.co'),
+        'supabaseKey': os.getenv('SUPABASE_KEY', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ncmJscXl2Y2hkdnFud3BqZHB2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM4ODM2MjQsImV4cCI6MjA3OTQ1OTYyNH0.rXdMuF0kB13Y9w6dIJD4ebZ7fgDOLUaPAPjCIq_MfEs')
+    })
+
 import re
 
 import PIL.Image

@@ -1,11 +1,17 @@
 const { createClient } = supabase;
 
-const SUPABASE_URL = 'https://ngrblqyvchdvqnwpjdpv.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ncmJscXl2Y2hkdnFud3BqZHB2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM4ODM2MjQsImV4cCI6MjA3OTQ1OTYyNH0.rXdMuF0kB13Y9w6dIJD4ebZ7fgDOLUaPAPjCIq_MfEs';
+let supabaseClient;
 
-const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+async function initSupabase() {
+    const response = await fetch('/api/config');
+    const config = await response.json();
+    supabaseClient = createClient(config.supabaseUrl, config.supabaseKey);
+    return supabaseClient;
+}
 
 document.addEventListener('DOMContentLoaded', async () => {
+    await initSupabase();
+
     const authError = document.getElementById('auth-error');
     const loginLink = document.getElementById('login-link'); // Keep this if not explicitly removed
 
