@@ -106,9 +106,29 @@
                 <div class="summary-card">
                     <h3 data-i18n="result_summary">Summary</h3>
                     <p id="summary-text"></p>
+
+                    <div class="share-options">
+                        <button onclick="shareViaWhatsApp()" class="share-btn whatsapp">
+                            📱 WhatsApp
+                        </button>
+                        <button onclick="shareViaSMS()" class="share-btn sms">
+                            💬 SMS
+                        </button>
+                        <button onclick="shareViaEmail()" class="share-btn email">
+                            📧 Email
+                        </button>
+                        <button onclick="copyToClipboard()" class="share-btn copy">
+                            📋 Copy
+                        </button>
+                    </div>
                 </div>
 
                 <audio id="audio-player" controls></audio>
+
+                <div id="medications-section" class="medications-section hidden">
+                    <h3>💊 Prescribed Medications</h3>
+                    <div id="medications-list" class="medications-list"></div>
+                </div>
 
                 <div id="key-terms-container" class="key-terms-container hidden">
                     <h4 data-i18n="result_key_terms">Key Medical Terms</h4>
@@ -117,11 +137,20 @@
             </section>
         </main>
     </div>
+
+    <div id="medication-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeMedicationModal()">&times;</span>
+            <div id="medication-modal-content"></div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="{{ url_for('static', filename='js/translations.js') }}"></script>
     <script src="{{ url_for('static', filename='js/mobile-menu.js') }}"></script>
     <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/share.js') }}"></script>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 

@@ -121,6 +121,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 keyTermsContainer.classList.remove('hidden');
             }
 
+            if (data.medications && data.medications.length > 0) {
+                const medicationsSection = document.getElementById('medications-section');
+                const medicationsList = document.getElementById('medications-list');
+                medicationsList.innerHTML = '';
+
+                data.medications.forEach(med => {
+                    const medCard = document.createElement('div');
+                    medCard.className = 'medication-card';
+                    medCard.innerHTML = `
+                        <h4>${med.name}</h4>
+                        <p><strong>Dosage:</strong> ${med.dosage}</p>
+                        <p><strong>Frequency:</strong> ${med.frequency}</p>
+                        <p><strong>Purpose:</strong> ${med.purpose}</p>
+                        <button onclick="getMedicationInfo('${med.name}')" class="med-info-btn">
+                            Learn More & Find Alternatives
+                        </button>
+                    `;
+                    medicationsList.appendChild(medCard);
+                });
+
+                medicationsSection.classList.remove('hidden');
+            }
+
             let contextToSave = "";
             if (!text && file) {
                 contextToSave = `Summary of the note: ${data.summary}`;

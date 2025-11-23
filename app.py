@@ -153,13 +153,24 @@ def summarize():
         Analyze the following medical input (text or image). 
         1. Provide a 3-5 sentence summary at a Grade 8 reading level for a patient. Explain what the medical content means in simple terms.
         2. Extract 3-5 key medical terms from the content that a patient might not understand.
+        3. Extract any prescribed medications with their details.
         {language_instruction}
         
         Format your response exactly as this JSON:
         {{
             "summary": "The summary text here...",
-            "key_terms": ["term1", "term2", "term3"]
+            "key_terms": ["term1", "term2", "term3"],
+            "medications": [
+                {{
+                    "name": "Medication name",
+                    "dosage": "500mg" or "Not specified",
+                    "frequency": "twice daily" or "Not specified",
+                    "purpose": "what it treats" or "Not specified"
+                }}
+            ]
         }}
+        
+        If no medications are mentioned, return an empty medications array.
         """
         
         content_parts = [prompt_instruction]
@@ -178,9 +189,11 @@ def summarize():
             result = json.loads(response_text)
             summary = result.get('summary', 'Summary not available.')
             key_terms = result.get('key_terms', [])
+            medications = result.get('medications', [])
         except json.JSONDecodeError:
             summary = response.text
             key_terms = []
+            medications = []
 
         tts = gTTS(text=summary, lang='en')
         filename = f"{uuid.uuid4()}.mp3"
@@ -191,6 +204,7 @@ def summarize():
         return jsonify({
             'summary': summary,
             'key_terms': key_terms,
+            'medications': medications,
             'audio_url': audio_url
         })
 
@@ -254,6 +268,61 @@ def chat():
 @app.route('/static/audio/<path:filename>')
 def serve_audio(filename):
     return send_from_directory(AUDIO_DIR, filename)
+
+@app.route('/medication_info', methods=['POST'])
+def medication_info():
+    data = request.get_json()
+    medication = data.get('medication')
+    
+    if not medication:
+        return jsonify({'error': 'No medication provided'}), 400
+    
+    try:
+        prompt = f"""
+        Provide information about the medication: {medication}
+        
+        Include:
+        1. Generic name (if it's a brand name)
+        2. What it's used for (purpose)
+        3. Common alternatives or generic equivalents (2-3 options)
+        
+        Format as JSON:
+        {{
+            "name": "{medication}",
+            "generic_name": "generic name or null",
+            "purpose": "what it treats",
+            "alternatives": ["alternative1", "alternative2"]
+        }}
+        
+        Keep it simple and patient-friendly.
+        """
+        
+        model = get_genai_model()
+        response = model.generate_content(prompt)
+        response_text = response.text.replace('```json', '').replace('```', '').strip()
+        
+        try:
+            result = json.loads(response_text)
+        except json.JSONDecodeError:
+            result = {
+                "name": medication,
+                "generic_name": None,
+                "purpose": "Information not available",
+                "alternatives": []
+            }
+        
+        pharmacies = [
+            {"name": "1mg", "url": f"https://www.1mg.com/search/all?name={medication}"},
+            {"name": "PharmEasy", "url": f"https://pharmeasy.in/search/all?name={medication}"},
+            {"name": "Netmeds", "url": f"https://www.netmeds.com/catalogsearch/result/{medication}"},
+            {"name": "Apollo Pharmacy", "url": f"https://www.apollopharmacy.in/search-medicines/{medication}"}
+        ]
+        
+        result['pharmacies'] = pharmacies
+        return jsonify(result)
+        
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=False)
